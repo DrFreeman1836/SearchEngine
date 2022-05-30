@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <indexes id='1' lemma_id='1' page_id='1' raking='1.8'/>
+  <indexes id='2' lemma_id='2' page_id='1' raking='1.0'/>
+  <indexes id='3' lemma_id='3' page_id='1' raking='0.8'/>
+
+  <indexes id='4' lemma_id='4' page_id='2' raking='1.0'/>
+  <indexes id='5' lemma_id='5' page_id='2' raking='0.8'/>
+  <indexes id='6' lemma_id='1' page_id='2' raking='0.8'/>
+
+  <indexes id='7' lemma_id='6' page_id='3' raking='1.0'/>
+  <indexes id='8' lemma_id='7' page_id='3' raking='0.8'/>
+  <indexes id='9' lemma_id='8' page_id='3' raking='0.8'/>
+</dataset>

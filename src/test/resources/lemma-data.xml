@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <lemma id='1' lemma='магазин' frequency='3' site_id='1'/>
+  <lemma id='2' lemma='интернет' frequency='1' site_id='1'/>
+  <lemma id='3' lemma='планшет' frequency='1' site_id='1'/>
+
+  <lemma id='4' lemma='корзина' frequency='1' site_id='1'/>
+  <lemma id='5' lemma='товар' frequency='1' site_id='1'/>
+
+  <lemma id='6' lemma='владимир' frequency='1' site_id='2'/>
+  <lemma id='7' lemma='город' frequency='1' site_id='2'/>
+  <lemma id='8' lemma='сегодня' frequency='1' site_id='2'/>
+
+</dataset>
+
+

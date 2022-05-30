@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  listIndex="[1], [2], [3]"-->
+<dataset>
+  <page id='1' code='200' path='/' content="
+    &lt;title&gt;Интернет магазин&lt;/title&gt;
+    &lt;body&gt;Магазин планшетов&lt;/body&gt;" site_id='1'/>
+
+  <page id='2' code='200' path='/basket' content="
+    &lt;title&gt;Корзина&lt;/title&gt;
+    &lt;body&gt;Товары в магазине&lt;/body&gt;" site_id='1'/>
+
+  <page id='3' code='200' path='/' content="
+    &lt;title&gt;Владимир&lt;/title&gt;
+    &lt;body&gt;Город сегодня&lt;/body&gt;" site_id='2'/>
+</dataset>

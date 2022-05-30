@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <field id='1' name='title' selector='title' weight='1'/>
+  <field id='2' name='body' selector='body' weight='0.8'/>
+</dataset>
