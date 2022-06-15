@@ -1,6 +1,7 @@
 package main.rest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import main.config.ListOfProperties;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import main.config.ListOfProperties.Site;
 import main.dto.DtoPage;
 import main.dto.DtoResponse;
 import main.dto.Statistics;
+import main.dto.Total;
 import main.service.impl.IndexingManagerService;
 import main.service.impl.SearchService;
 import org.springframework.http.ResponseEntity;
@@ -29,17 +31,18 @@ public class SearchController {
   @GetMapping("/startIndexing")
   public ResponseEntity<?> startIndexing() {
     if (indexingManagerService.startingIndexing(listOfProperties.getSites())) {
-      return ResponseEntity.ok().build();
+      return ResponseEntity.ok().body(Map.of("result", true));
     }
-    return ResponseEntity.status(405).body("Индексация уже запущена");
+    return ResponseEntity.status(405)
+        .body(Map.of("result", false, "error", "Индексация уже запущена"));
   }
 
   @GetMapping("/stopIndexing")
   public ResponseEntity<?> stopIndexing() {
     if (indexingManagerService.stopIndexing()) {
-      return ResponseEntity.ok().build();
+      return ResponseEntity.ok().body(Map.of("result", true));
     }
-    return ResponseEntity.status(405).body("Индексация не запущена");
+    return ResponseEntity.status(405).body(Map.of("result", false, "error", "Индексация не запущена"));
   }
 
   @PostMapping("/indexPage")
@@ -47,23 +50,21 @@ public class SearchController {
     Optional<Site> siteConfig = listOfProperties.getSites().stream()
         .filter(site -> site.getUrl().equals(url)).findAny();
     if (siteConfig.isEmpty()) {
-      return ResponseEntity.status(405).body(
-          "Данная страница находится за пределами сайтов, указанных в конфигурационном файле");
+      return ResponseEntity.status(405).body(Map.of("result", false,
+          "error","Данная страница находится за пределами сайтов, указанных в конфигурационном файле"));
     }
     if (!indexingManagerService.startingIndexing(siteConfig.get())) {
-      return ResponseEntity.status(405).body("Индексация данной страници уже запущена");
+      return ResponseEntity.status(405).body(Map.of("result", false,
+          "error","Индексация даннной страницы уже запущена"));
     } else {
-      return ResponseEntity.ok().build();
+      return ResponseEntity.ok().body(Map.of("result", true));
     }
   }
 
   @GetMapping("/statistics")
   public ResponseEntity<?> getStatistics() {
     Statistics statistics = indexingManagerService.getStatistic();
-    if (statistics == null) {
-      return ResponseEntity.status(404).body("Не удалось получить статистику");
-    }
-    return ResponseEntity.ok(statistics);
+    return ResponseEntity.ok().body(Map.of("result", true, "statistics", statistics));
   }
 
   @GetMapping("/search")
@@ -74,18 +75,16 @@ public class SearchController {
       @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit) {
 
     if (query == null) {
-      return ResponseEntity.status(405).body("Задан пустой поисковой запрос");
+      return ResponseEntity.status(405)
+          .body(Map.of("result", false, "error", "Задан пустой поисковой запрос"));
     }
 
     List<DtoPage> listPageByRequest;
-    if (!listOfProperties.getSites().stream().map(Site::getUrl)
-        .toList().contains(site) && site != null) {
-      return ResponseEntity.status(405).body("Указанная страница не найдена");
-    } else {
-      listPageByRequest = searchService.getPagesByRequest(query, site).stream()
-          .skip(offset).limit(limit).toList();
-    }
+    listPageByRequest = searchService.getPagesByRequest(query, site).stream()
+        .skip(offset).limit(limit).toList();
+
     DtoResponse response = DtoResponse.builder()
+        .result(true)
         .count(listPageByRequest.size())
         .data(listPageByRequest)
         .build();
@@ -93,3 +92,8 @@ public class SearchController {
   }
 
 }
+/**
+ * доработать метод старта статистики и остоновки
+ * выделить жирным
+ * на хероку
+ */

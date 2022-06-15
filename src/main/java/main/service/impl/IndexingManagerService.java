@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import main.config.ListOfProperties;
 import main.dto.SiteStatistics;
 import main.dto.Statistics;
+import main.dto.Total;
 import main.model.Index;
 import main.model.Lemma;
 import main.model.Page;
@@ -127,9 +128,6 @@ public class IndexingManagerService implements ManagerService {
   }
 
   public Statistics getStatistic() {
-    if (siteRepository.findAll().isEmpty()) {
-      return null;
-    }
     List<SiteStatistics> listSites = new ArrayList<>();
     for (Site site : siteRepository.findAll()) {
       listSites.add(SiteStatistics.builder()
@@ -141,11 +139,14 @@ public class IndexingManagerService implements ManagerService {
           .lemmas(lemmaRepository.findAllBySiteId(site.getId()).size()).build());
     }
 
-    return Statistics.builder()
+    Total total = Total.builder()
         .sites(siteRepository.findAll().size())
         .pages(pageRepository.findAll().size())
         .lemmas(lemmaRepository.findAll().size())
-        .isIndexing(checkingIndexing())
+        .isIndexing(checkingIndexing()).build();
+
+    return Statistics.builder()
+        .total(total)
         .detailed(listSites).build();
   }
 

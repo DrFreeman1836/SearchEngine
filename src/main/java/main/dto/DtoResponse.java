@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DtoResponse {
 
+  private boolean result;
   private int count;
   private List<DtoPage> data;
 

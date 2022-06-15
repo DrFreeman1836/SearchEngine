@@ -8,9 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class Statistics {
+public class Total {
 
-  private Total total;
-  private List<SiteStatistics> detailed;
+  private int sites;
+  private int pages;
+  private int lemmas;
+  private boolean isIndexing;
+
 
 }
